@@ -103,16 +103,23 @@ The extracted image feature vector is provided to the LSTM decoder. During train
 
 ## 📂 Dataset
 
-**Dataset:** Flickr8k
+This project uses the **Flickr8k Dataset**, a benchmark dataset widely used for image captioning tasks.
+
+**Dataset Statistics**
 
 | Description | Value |
 |------------|------:|
 | Images | 8,091 |
 | Captions | 40,445 |
+| Captions per Image | 5 |
 | Vocabulary Size | 8,484 |
-| Caption Length | 35 |
 
----
+### Dataset Source
+
+- **Kaggle:** https://www.kaggle.com/datasets/adityajn105/flickr8k
+- **Original Flickr8k Dataset:** https://forms.illinois.edu/sec/1713398
+
+> **Note:** The Flickr8k dataset is intended for research and educational purposes. Please review the dataset license and usage terms before using it.
 
 # 📊 Model Performance
 
