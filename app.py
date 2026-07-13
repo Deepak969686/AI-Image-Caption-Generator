@@ -255,7 +255,7 @@ if uploaded_image is not None:
 
         progress.progress(100)
 
-        status.success("Caption Generated Successfully ✅"))
+        status.success("Caption Generated Successfully ✅")
 
 # ============================================================
 # Display Results
