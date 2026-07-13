@@ -84,7 +84,7 @@ unsafe_allow_html=True
 def load_models():
 
     # Load VGG16 Feature Extractor
-    base_model = VGG16()
+    base_model = VGG16(weights="imagenet")
 
     feature_extractor = Model(
         inputs=base_model.inputs,
@@ -92,7 +92,10 @@ def load_models():
     )
 
     # Load Caption Model
-    caption_model = load_model("model.h5")
+    caption_model = load_model(
+        "model.h5",
+        compile=False
+    )
 
     # Load Tokenizer
     with open("tokenizer.pkl", "rb") as f:
@@ -101,18 +104,16 @@ def load_models():
     return feature_extractor, caption_model, tokenizer
 
 
-feature_extractor, caption_model, tokenizer = load_models()
+feature_extractor = None
+caption_model = None
+tokenizer = None
 
 # ============================================================
 # Fast Index -> Word
 # ============================================================
 
-index_to_word = tokenizer.index_word
-
-
-def get_word(index):
-
-    return index_to_word.get(index)
+def get_word(index, tokenizer):
+    return tokenizer.index_word.get(index)
 
 # ============================================================
 # Main Title
@@ -162,7 +163,7 @@ def predict_caption(
 
         predicted_index = np.argmax(prediction)
 
-        predicted_word = get_word(predicted_index)
+        predicted_word = get_word(predicted_index,tokenizer)
 
         if predicted_word is None:
             break
@@ -184,6 +185,13 @@ def predict_caption(
 # ============================================================
 
 if uploaded_image is not None:
+
+    # Load models only when user uploads an image
+    if feature_extractor is None:
+
+        with st.spinner("Loading AI Model... Please wait."):
+
+            feature_extractor, caption_model, tokenizer = load_models()
 
     col1, col2 = st.columns([1, 1])
 
@@ -208,7 +216,7 @@ if uploaded_image is not None:
 
         image = load_img(
             uploaded_image,
-            target_size=(224,224)
+            target_size=(224, 224)
         )
 
         progress.progress(20)
@@ -236,7 +244,6 @@ if uploaded_image is not None:
         )
 
         status.write("Generating Caption...")
-
         progress.progress(80)
 
         generated_caption = predict_caption(
@@ -248,9 +255,9 @@ if uploaded_image is not None:
 
         progress.progress(100)
 
-        status.success("Caption Generated Successfully ✅")
+        status.success("Caption Generated Successfully ✅"))
 
-        # ============================================================
+# ============================================================
 # Display Results
 # ============================================================
 
