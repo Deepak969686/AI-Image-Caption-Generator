@@ -17,7 +17,17 @@ An end-to-end **Deep Learning** project that automatically generates natural lan
 
 ---
 
-# 🏗️ Model Architecture
+## 🏗️ Model Architecture
+
+The image captioning system uses a **CNN (VGG16)** encoder to extract visual features from an image and an **LSTM** decoder to generate natural language captions.
+
+<p align="center">
+  <img src="model.png" alt="Model Architecture" width="700"/>
+</p>
+
+---
+
+### Architecture Overview
 
 ```
                  Input Image
@@ -36,6 +46,41 @@ An end-to-end **Deep Learning** project that automatically generates natural lan
                       ▼
           Generated Natural Language Caption
 ```
+
+---
+
+## 🔄 Workflow
+
+<p align="center">
+
+```text
+User Uploads Image
+        │
+        ▼
+Preprocessing (224 × 224)
+        │
+        ▼
+VGG16 Feature Extraction
+        │
+        ▼
+4096-D Feature Vector
+        │
+        ▼
+LSTM Caption Generator
+        │
+        ▼
+Generated Caption
+        │
+        ├──────────────┐
+        ▼              ▼
+ Display Caption    Text-to-Speech
+        │              │
+        └──────► Download Caption
+```
+
+</p>
+
+---
 
 ---
 
